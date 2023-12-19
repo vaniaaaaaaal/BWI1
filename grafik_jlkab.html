@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grafik</title>
+    <!-- Tambahkan link ke library grafik (Chart.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Tambahkan link ke library Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body class="container mt-5">
+
+    <h1 class="text-center">Data Infrastruktur Jalan Kab Banyuwangi</h1>
+
+    <div class="row">
+
+        <!-- Container untuk grafik batang -->
+        <div class="col-md-6">
+            <div class="my-5">
+                <h2 class="text-center">Perkerasan Jalan</h2>
+                <canvas id="barChart" class="chart" width="400" height="300"></canvas>
+            </div>
+            <div class="text-center my-2">
+                <button class="btn btn-primary" onclick="downloadChart('barChart', 'bar_chart', 'jpg')">Unduh Grafik Batang (JPG)</button>
+                <button class="btn btn-primary" onclick="downloadChart('barChart', 'bar_chart', 'png')">Unduh Grafik Batang (PNG)</button>
+            </div>
+        </div>
+
+        <!-- Container untuk grafik pie -->
+        <div class="col-md-6">
+            <div class="my-5">
+                <h2 class="text-center">Kondisi Jalan</h2>
+                <canvas id="pieChart" class="chart" width="400" height="300"></canvas>
+            </div>
+            <div class="text-center my-2">
+                <button class="btn btn-primary" onclick="downloadChart('pieChart', 'pie_chart', 'jpg')">Unduh Grafik Pie (JPG)</button>
+                <button class="btn btn-primary" onclick="downloadChart('pieChart', 'pie_chart', 'png')">Unduh Grafik Pie (PNG)</button>
+            </div>
+        </div>
+
+    <script>
+        // Fungsi untuk menggambar grafik batang
+        function drawBarChart() {
+            var ctx = document.getElementById('barChart').getContext('2d');
+            // Tambahkan logika untuk data dan label grafik batang
+            var data = {
+                labels: ["Aspal", "Kerikil", "Tanah", "Beton"],
+                datasets: [{
+                    label: 'Dataset 1',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1,
+                    data: [267, 89, 34.7, 32]
+                }]
+            };
+            var barChart = new Chart(ctx, {
+                type: 'bar',
+                data: data
+            });
+        }
+
+        // Fungsi untuk menggambar grafik pie
+        function drawPieChart() {
+            var ctx = document.getElementById('pieChart').getContext('2d');
+            // Tambahkan logika untuk data dan label grafik pie
+            var data = {
+                labels: ["Sedang", "Baik", "Rusak Berat", "Rusak"],
+                datasets: [{
+                    data: [37.300, 604.004, 144.349, 14.590],
+                    backgroundColor: ["#FFA384", "#36A2EB", "#FFCE56", "#FF6384"]
+                }]
+            };
+            var pieChart = new Chart(ctx, {
+                type: 'pie',
+                data: data
+            });
+        }
+
+
+        // Fungsi untuk mengunduh grafik
+        function downloadChart(chartId, fileName, format) {
+            var canvas = document.getElementById(chartId);
+            var dataURL = canvas.toDataURL('image/' + format);
+            var link = document.createElement('a');
+            link.href = dataURL;
+            link.download = fileName + '.' + format;
+            link.click();
+        }
+
+        // Panggil fungsi-fungsi untuk menggambar grafik saat halaman dimuat
+        drawBarChart();
+        drawPieChart();
+        drawLineChart();
+        drawAreaChart();
+    </script>
+
+    <!-- Tambahkan script Bootstrap JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</body>
+</html>
